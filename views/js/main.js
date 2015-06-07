@@ -24,7 +24,7 @@ cameron *at* udacity *dot* com
 // after computing only once
 // on the page load when the pizza
 // images are created.
-
+var viewportWidth,viewportHeight;
 
 
 
@@ -525,9 +525,17 @@ function updatePositions() {
       phases[k] = Math.sin((document.body.scrollTop / 1250) + (k));
   }
 
+  var horizOffset = .5*viewportWidth;
+
 
   for (var i = 0; i < items.length; i++) {
-    items[i].style.left = items[i].basicLeft + 100 * phases[i % 5] + 'px';
+    //items[i].style.left = items[i].basicLeft + 100 * phases[i % 5] + 'px';
+    var basicLeftNum = parseInt(items[i].basicLeft);
+    var translateXExpressionNumeric = items[i].basicLeft + 100 * phases[i % 5];
+    translateXExpressionNumeric-=horizOffset;
+    var translateExpression = 'translateX(' + translateXExpressionNumeric.toString() + 'px'+ ')';
+    items[i].style.transform =  translateExpression ;
+
 
   }
 
@@ -548,8 +556,8 @@ window.addEventListener('scroll', updatePositions);
 document.addEventListener('DOMContentLoaded', function() {
   //var cols = 8;
   var s = 256;
-  var viewportWidth = $(window).width();
-  var viewportHeight = $(window).height();
+  viewportWidth = $(window).width();
+  viewportHeight = $(window).height();
   /*
    * Compute the number of pizzas needed
    * based on the view port dimension.
@@ -559,7 +567,7 @@ document.addEventListener('DOMContentLoaded', function() {
    var rows = Math.ceil(viewportHeight/s);
    var maxNumPizzas = cols*rows;
 
-   console.log("rows: "+rows+", cols: "+cols);
+
   for (var i = 0; i < maxNumPizzas; i++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
@@ -570,8 +578,6 @@ document.addEventListener('DOMContentLoaded', function() {
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
 
     document.querySelector("#movingPizzas1").appendChild(elem);
-
-    // compute the phases on load of content
 
 
 
