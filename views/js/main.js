@@ -534,12 +534,12 @@ function updatePositions() {
    */
 
   for (var i = 0; i < items.length; i++) {
-    items[i].style.left = items[i].basicLeft + 100 * phases[i % 5] + 'px';
-    //var basicLeftNum = parseInt(items[i].basicLeft);
-    //var translateXExpressionNumeric = items[i].basicLeft + 100 * phases[i % 5];
+    //items[i].style.left = items[i].basicLeft + 100 * phases[i % 5] + 'px';
+    var basicLeftNum = parseInt(items[i].basicLeft);
+    var translateXExpressionNumeric = items[i].basicLeft + 100 * phases[i % 5];
 
-    //var translateExpression = 'translateX(' + translateXExpressionNumeric.toString() + 'px'+ ')';
-    //items[i].style.transform =  translateExpression ;
+    var translateExpression = 'translateX(' + translateXExpressionNumeric.toString() + 'px'+ ')';
+    items[i].style.transform =  translateExpression ;
 
   }
   //}
