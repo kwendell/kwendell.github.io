@@ -510,7 +510,7 @@ function logAverageFrame(times) {   // times is the array of User Timing measure
 // Moves the sliding background pizzas based on scroll position
 function updatePositions() {
   frame++;
-  var frameMod = frame % 10;
+
   window.performance.mark("mark_start_frame");
 
   var items = document.querySelectorAll('.mover');
@@ -528,18 +528,18 @@ function updatePositions() {
   }
 
   var horizOffset = .5*viewportWidth;
-
+  /*
+   * Prefer style.transform to style.left in accordance
+   * with the recommendations from Paul's web page.
+   */
 
   for (var i = 0; i < items.length; i++) {
     //items[i].style.left = items[i].basicLeft + 100 * phases[i % 5] + 'px';
     var basicLeftNum = parseInt(items[i].basicLeft);
     var translateXExpressionNumeric = items[i].basicLeft + 100 * phases[i % 5];
 
-
     var translateExpression = 'translateX(' + translateXExpressionNumeric.toString() + 'px'+ ')';
     items[i].style.transform =  translateExpression ;
-
-
 
   }
   //}
