@@ -527,7 +527,7 @@ function updatePositions() {
       phases[k] = Math.sin((document.body.scrollTop / 1250) + (k));
   }
 
-  var horizOffset = 1.0*viewportWidth;
+  var horizOffset = 0.5*viewportWidth;
   /*
    * Prefer style.transform to style.left in accordance
    * with the recommendations from Paul's web page.
@@ -537,6 +537,7 @@ function updatePositions() {
     //items[i].style.left = items[i].basicLeft + 100 * phases[i % 5] + 'px';
     var basicLeftNum = parseInt(items[i].basicLeft);
     var translateXExpressionNumeric = items[i].basicLeft + 100 * phases[i % 5];
+    translateXExpressionNumeric=translateXExpressionNumeric-horizOffset;
 
     var translateExpression = 'translateX(' + translateXExpressionNumeric.toString() + 'px'+ ')';
     items[i].style.transform =  translateExpression ;
