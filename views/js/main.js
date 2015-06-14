@@ -534,6 +534,8 @@ function updatePositions() {
     //items[i].style.left = items[i].basicLeft + 100 * phases[i % 5] + 'px';
     var basicLeftNum = parseInt(items[i].basicLeft);
     var translateXExpressionNumeric = items[i].basicLeft + 100 * phases[i % 5];
+    translateXExpressionNumeric=translateXExpressionNumeric.toFixed(0);
+    if (translateXExpressionNumeric==0) console.log("IT's zero");
 
     var translateExpression = 'translateX(' + translateXExpressionNumeric.toString() + 'px'+ ')';
     items[i].style.transform =  translateExpression ;
