@@ -501,7 +501,7 @@ function logAverageFrame(times) {   // times is the array of User Timing measure
   for (var i = numberOfEntries - 1; i > numberOfEntries - 11; i--) {
     sum = sum + times[i].duration;
   }
-  //console.log("Average time to generate last 10 frames: " + sum / 10 + "ms");
+  console.log("Average time to generate last 10 frames: " + sum / 10 + "ms");
 }
 
 // The following code for sliding background pizzas was pulled from Ilya's demo found at:
@@ -527,7 +527,7 @@ function updatePositions() {
       phases[k] = Math.sin((document.body.scrollTop / 1250) + (k));
   }
 
-  var horizOffset = .5*viewportWidth;
+  var horizOffset = 1.0*viewportWidth;
   /*
    * Prefer style.transform to style.left in accordance
    * with the recommendations from Paul's web page.
