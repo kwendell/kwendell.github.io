@@ -460,10 +460,19 @@ var resizePizzas = function(size) {
 
   // Iterates through pizza elements on the page and changes their widths
   function changePizzaSizes(size) {
-    for (var i = 0; i < document.querySelectorAll(".randomPizzaContainer").length; i++) {
-      var dx = determineDx(document.querySelectorAll(".randomPizzaContainer")[i], size);
-      var newwidth = (document.querySelectorAll(".randomPizzaContainer")[i].offsetWidth + dx) + 'px';
-      document.querySelectorAll(".randomPizzaContainer")[i].style.width = newwidth;
+    // Prefer getElementsByClassName() over queryAll
+     //  get the pizza to be resized on an array rather than repeatedly querying the DOM
+    //  at each iteration of the loop.
+    var pizzaContainerArray = document.getElementsByClassName("randomPizzaContainer");
+    var pizzaContainerLen =pizzaContainerArray.length;
+    // Save DOM querty time by using the first element to compute newWidth, dx.
+
+    var dx = determineDx(document.getElementsByClassName("randomPizzaContainer")[0], size);
+    var newwidth = (document.getElementsByClassName("randomPizzaContainer")[0].offsetWidth + dx) + 'px';
+
+
+    for (var i = 0; i < pizzaContainerLen; i++) {
+       pizzaContainerArray[i].style.width = newwidth;
     }
   }
 
@@ -479,8 +488,11 @@ var resizePizzas = function(size) {
 window.performance.mark("mark_start_generating"); // collect timing data
 
 // This for-loop actually creates and appends all of the pizzas when the page loads
+// Move pizzasDiv outside of loop to avoid unnec. looped
+// DOM lookups.
+var pizzasDiv = document.getElementById("randomPizzas");
 for (var i = 2; i < 100; i++) {
-  var pizzasDiv = document.getElementById("randomPizzas");
+
   pizzasDiv.appendChild(pizzaElementGenerator(i));
 }
 
@@ -512,10 +524,14 @@ function updatePositions() {
   frame++;
 
   window.performance.mark("mark_start_frame");
+  // Prefer getElementsByClassName() to getAll().
+  var items = document.getElementsByClassName('mover');
 
-  var items = document.querySelectorAll('.mover');
 
- // if (frame % 2==0) {
+  // Avoid touching the doc by moving the expression
+  // outside the loop.
+  var scrollTopNormalized = document.body.scrollTop / 1250;
+
   // Since there are only 5 possible
   // values for the phase, compute them once
   // and place in an array to minimize
@@ -524,17 +540,19 @@ function updatePositions() {
 
   phases = [] ;
   for (var k = 0; k < 5; k++)  {
-      phases[k] = Math.sin((document.body.scrollTop / 1250) + (k));
+      phases[k] = Math.sin((scrollTopNormalized) + (k));
   }
 
   var horizOffset = 0.5*viewportWidth;
   /*
    * Prefer style.transform to style.left in accordance
-   * with the recommendations from Paul's web page.
+   * with the recommendations from Paul's web page.   This
+   * allows more burden to be placed on the GPU, less
+   * on repainting, (translate + transform)
    */
 
   for (var i = 0; i < items.length; i++) {
-    //items[i].style.left = items[i].basicLeft + 100 * phases[i % 5] + 'px';
+    // Compute the offset from the phase
     var basicLeftNum = parseInt(items[i].basicLeft);
     var translateXExpressionNumeric = items[i].basicLeft + 100 * phases[i % 5];
     translateXExpressionNumeric=translateXExpressionNumeric-horizOffset;
@@ -563,15 +581,15 @@ window.addEventListener('scroll', updatePositions);
 document.addEventListener('DOMContentLoaded', function() {
   //var cols = 8;
   var s = 256;
-  viewportWidth = $(window).width();
-  viewportHeight = $(window).height();
+  viewportWidth = window.innerWidth;
+  viewportHeight = window.innerHeight;
   /*
    * Compute the number of pizzas needed
    * based on the view port dimension.
    */
    // max visible columns
    var cols = Math.ceil(viewportWidth/s);
-   var rows = Math.ceil(viewportHeight/s);
+   var rows = Math.ceil(window.innerHeight/s);
    var maxNumPizzas = cols*rows;
 
 
@@ -584,7 +602,7 @@ document.addEventListener('DOMContentLoaded', function() {
     elem.basicLeft = (i % cols) * s;
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
 
-    document.querySelector("#movingPizzas1").appendChild(elem);
+    document.getElementById("movingPizzas1").appendChild(elem);
 
 
 
