@@ -1,3 +1,28 @@
+## References
+I used www schools for javascript issues.
+I used jquery.com site for problems related to that techology.
+I used all of the Google links that were related to font loading, critcal path
+rendering, some of them Ilya's blogs.
+I made extensive use of the Udacity forums when I got stuck.
+I used Paul's site that showed the performance consequences of using different ccss methods.
+
+#Summary of Steps
+I worked through the PageSpeed insights scores.   I impemented the guidelines
+from the course materials to minimize the critcial path.  This included -but 
+was not limtied to:
+1. Inline CSS for rendering blocking css files.
+2. Making use of the async keyword for rendering blocking javascript.
+3. Loading the Google font asynchronously.
+4. Employing media query to styles that weren't necessary like
+css files related to the print media type.
+5. Per PageInsights suggestion I decreased the size of the pizzeria
+image to minimize the bytes in the critical path formula.
+--Browser Performance
+1.  In views/js/main.js I changed the loop limits to create only
+enough pizzas that could be seen within the viewport.
+2.  In the for loop in the update method I moved the computation
+of phase out of the pizza object loop to only include the 5 possible
+values and place those values in an array.
 ## Website Performance Optimization portfolio project
 
 Your challenge, if you wish to accept it (and we sure hope you will), is to optimize this online portfolio for speed! In particular, optimize the critical rendering path and make this page render as quickly as possible by applying the techniques you've picked up in the [Critical Rendering Path course](https://www.udacity.com/course/ud884).
