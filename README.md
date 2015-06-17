@@ -8,7 +8,7 @@ I used Paul's site that showed the performance consequences of using different c
 
 #Summary of Steps
 I worked through the PageSpeed insights scores.   I impemented the guidelines
-from the course materials to minimize the critcial path.  This included -but 
+from the course materials to minimize the critcial path.  This included -but
 was not limtied to:
 1. Inline CSS for rendering blocking css files.
 2. Making use of the async keyword for rendering blocking javascript.
@@ -23,6 +23,18 @@ enough pizzas that could be seen within the viewport.
 2.  In the for loop in the update method I moved the computation
 of phase out of the pizza object loop to only include the 5 possible
 values and place those values in an array.
+3.  I optimized the pizza resizing by limiting unnecessary DOM
+queries by placing the query outside of the loop and using
+the array results to change the size within the loop for each
+array item returned from the query.
+
+
+HOW TO RUN INSTRUCTIONS
+After placing the site contents in a suitable folder, you can view the site by using
+a web browser to view the index.htm from the root directory.  Alternatively,
+I have replicated this project into my github page. You can use the URL http://kwendell.github.io
+to access the page(s).
+
 ## Website Performance Optimization portfolio project
 
 Your challenge, if you wish to accept it (and we sure hope you will), is to optimize this online portfolio for speed! In particular, optimize the critical rendering path and make this page render as quickly as possible by applying the techniques you've picked up in the [Critical Rendering Path course](https://www.udacity.com/course/ud884).
@@ -57,7 +69,7 @@ Profile, optimize, measure... and then lather, rinse, and repeat. Good luck!
 
 ####Part 2: Optimize Frames per Second in pizza.html
 
-To optimize views/pizza.html, you will need to modify views/js/main.js until your frames per second rate is 60 fps or higher. You will find instructive comments in main.js. 
+To optimize views/pizza.html, you will need to modify views/js/main.js until your frames per second rate is 60 fps or higher. You will find instructive comments in main.js.
 
 You might find the FPS Counter/HUD Display useful in Chrome developer tools described here: [Chrome Dev Tools tips-and-tricks](https://developer.chrome.com/devtools/docs/tips-and-tricks).
 
